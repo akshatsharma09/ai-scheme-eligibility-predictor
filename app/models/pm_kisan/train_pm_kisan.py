@@ -1,94 +1,45 @@
 import numpy as np
 import pandas as pd
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
 import joblib
 from pathlib import Path
 
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
+# ---------- DATA GENERATION ----------
+np.random.seed(42)
+n = 500
 
+data = pd.DataFrame({
+    "land_size_acres": np.random.uniform(0.1, 5, n),
+    "annual_income": np.random.uniform(20000, 200000, n),
+    "owns_land": np.random.choice([0, 1], n, p=[0.2, 0.8]),
+    "is_farmer": np.random.choice([0, 1], n, p=[0.1, 0.9]),
+})
 
-def generate_pm_kisan_data(n_samples=3000):
-    np.random.seed(42)
+# Eligibility rule (ground truth logic)
+data["eligible"] = (
+    (data["owns_land"] == 1) &
+    (data["is_farmer"] == 1) &
+    (data["annual_income"] <= 150000)
+).astype(int)
 
-    ages = np.random.randint(18, 70, n_samples)
-    incomes = np.random.randint(50000, 500000, n_samples)
+X = data.drop("eligible", axis=1)
+y = data["eligible"]
 
-    states = np.random.choice(
-        ["Maharashtra", "UP", "Bihar", "Karnataka", "Tamil Nadu"],
-        n_samples
-    )
+# ---------- PIPELINE ----------
+pipeline = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression())
+])
 
-    genders = np.random.choice(["male", "female"], n_samples)
+pipeline.fit(X, y)
 
-    occupations = np.random.choice(
-        ["farmer", "student", "private_job", "government_job", "unemployed"],
-        n_samples,
-        p=[0.4, 0.15, 0.2, 0.15, 0.1]
-    )
+# ---------- SAVE MODEL ----------
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "pipeline.pkl"
 
-    eligible = []
+joblib.dump(pipeline, MODEL_PATH)
 
-    for age, income, occupation in zip(ages, incomes, occupations):
-        is_eligible = (
-            occupation == "farmer"
-            and income <= 200000
-            and age >= 18
-        )
-
-        # 8% noise
-        if np.random.rand() < 0.08:
-            is_eligible = not is_eligible
-
-        eligible.append(int(is_eligible))
-
-    return pd.DataFrame({
-        "age": ages,
-        "income": incomes,
-        "state": states,
-        "gender": genders,
-        "occupation": occupations,
-        "eligible": eligible
-    })
-
-
-def train_and_save_model():
-    data = generate_pm_kisan_data()
-
-    X = data.drop("eligible", axis=1)
-    y = data["eligible"]
-
-    categorical = ["state", "gender", "occupation"]
-    numerical = ["age", "income"]
-
-    preprocessor = ColumnTransformer(
-        [
-            ("num", StandardScaler(), numerical),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), categorical)
-        ]
-    )
-
-    pipeline = Pipeline(
-        [
-            ("preprocessor", preprocessor),
-            ("model", LogisticRegression(max_iter=1000))
-        ]
-    )
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-    pipeline.fit(X_train, y_train)
-
-    BASE_DIR = Path(__file__).resolve().parent
-
-    joblib.dump(pipeline, BASE_DIR / "pipeline.pkl")
-
-    print("✅ PM-KISAN pipeline saved successfully.")
-
-
-if __name__ == "__main__":
-    train_and_save_model()
+print("✅ PM-KISAN pipeline saved at:", MODEL_PATH)
+print("📦 File size (bytes):", MODEL_PATH.stat().st_size)
