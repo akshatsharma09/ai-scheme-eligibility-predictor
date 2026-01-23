@@ -37,10 +37,10 @@ const LandingPage = () => {
             </div>
             <div className="flex justify-center mt-8">
               <Link
-                to="/home"
+                to="/form"
                 className="bg-blue-800 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-900 transition-colors"
               >
-                Start Eligibility Check
+                Check Eligibility
               </Link>
             </div>
           </div>
