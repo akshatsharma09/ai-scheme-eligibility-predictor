@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import EligibilityFormPage from './pages/EligibilityFormPage';
 import ResultsPage from './pages/ResultsPage';
+import ApiTestPage from "./pages/ApiTestPage";
+
+<Route path="/api-test" element={<ApiTestPage />} />
+
 
 function App() {
   return (

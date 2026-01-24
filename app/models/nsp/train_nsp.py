@@ -10,13 +10,15 @@ np.random.seed(42)
 n = 500
 
 data = pd.DataFrame({
-    "age": np.random.randint(18, 65, n),
-    "annual_income": np.random.uniform(20000, 200000, n),
-    "has_family_id": np.random.choice([0, 1], n, p=[0.2, 0.8]),
+    "age": np.random.randint(17, 25, n),
+    "annual_income": np.random.uniform(10000, 200000, n),
+    "student_class": np.random.choice([10, 12, 1], n, p=[0.4, 0.5, 0.1]),
 })
 
-# Eligibility: Income <= 120000 and has family ID
-data["eligible"] = ((data["annual_income"] <= 120000) & (data["has_family_id"] == 1)).astype(int)
+data["eligible"] = (
+    (data["annual_income"] <= 120000) &
+    (data["student_class"].isin([10, 12]))
+).astype(int)
 
 X = data.drop("eligible", axis=1)
 y = data["eligible"]
@@ -31,5 +33,5 @@ pipeline.fit(X, y)
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "pipeline.pkl"
 joblib.dump(pipeline, MODEL_PATH)
-print("✅ Ayushman Bharat pipeline saved at:", MODEL_PATH)
+print("✅ NSP pipeline saved at:", MODEL_PATH)
 print("📦 File size (bytes):", MODEL_PATH.stat().st_size)

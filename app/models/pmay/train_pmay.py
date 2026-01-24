@@ -9,18 +9,24 @@ from pathlib import Path
 np.random.seed(42)
 n = 500
 
+# ---------- SYNTHETIC DATA ----------
 data = pd.DataFrame({
-    "age": np.random.randint(18, 65, n),
+    "age": np.random.randint(18, 60, n),
     "annual_income": np.random.uniform(20000, 200000, n),
-    "has_family_id": np.random.choice([0, 1], n, p=[0.2, 0.8]),
+    "is_female": np.random.choice([0, 1], n),
+    "is_laborer": np.random.choice([0, 1], n),
 })
 
-# Eligibility: Income <= 120000 and has family ID
-data["eligible"] = ((data["annual_income"] <= 120000) & (data["has_family_id"] == 1)).astype(int)
+# Ground truth eligibility logic
+data["eligible"] = (
+    (data["annual_income"] <= 120000) &
+    (data["is_female"] == 1)
+).astype(int)
 
 X = data.drop("eligible", axis=1)
 y = data["eligible"]
 
+# ---------- PIPELINE ----------
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
     ("model", LogisticRegression())
@@ -30,6 +36,7 @@ pipeline.fit(X, y)
 
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "pipeline.pkl"
+
 joblib.dump(pipeline, MODEL_PATH)
-print("✅ Ayushman Bharat pipeline saved at:", MODEL_PATH)
+print("✅ PMAY pipeline saved at:", MODEL_PATH)
 print("📦 File size (bytes):", MODEL_PATH.stat().st_size)
