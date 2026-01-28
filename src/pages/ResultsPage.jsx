@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import PredictionCard from "../components/PredictionCard";
+import ExplanationPanel from "../components/ExplanationPanel";
+import FairnessPanel from "../components/FairnessPanel";
 
 const ResultsPage = () => {
   const [language, setLanguage] = useState("en");
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
-  const { formData, results } = location.state || {};
+  const { formData, results, fairness, ethicalDisclaimer } =
+    location.state || {};
 
   const translations = {
     en: {
@@ -57,12 +61,21 @@ const ResultsPage = () => {
 
   const t = translations[language];
 
-  if (!results || !formData) return <div>Loading...</div>;
+  if (!results || !formData)
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-700">
+        No results found. Please start again from the eligibility form.
+      </div>
+    );
 
   const overallProbability = Math.round(
-    results.reduce((sum, s) => sum + s.approval_probability, 0) / results.length
+    results.reduce((sum, s) => sum + (s.approval_probability || 0), 0) /
+      results.length
   );
-  const totalBenefit = results.reduce((sum, s) => sum + s.expected_annual_benefit, 0);
+  const totalBenefit = results.reduce(
+    (sum, s) => sum + (s.expected_annual_benefit || 0),
+    0
+  );
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -102,50 +115,31 @@ const ResultsPage = () => {
       <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column: Scheme Cards */}
         <div className="bg-white p-6 rounded-lg shadow-md border">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">{t.resultsTitle}</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">
+            {t.resultsTitle}
+          </h2>
           <div className="space-y-4">
             {results.map((scheme, idx) => (
-              <div key={idx} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">{scheme.category}</span>
-                  <span className="text-sm font-medium text-green-600">{t.eligible}</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">{scheme.scheme}</h3>
-                <p className="text-sm text-gray-600 mb-2">{scheme.description}</p>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-500">{t.probability}: {scheme.approval_probability}%</span>
-                  <span className="text-sm text-gray-500">₹{scheme.expected_annual_benefit.toLocaleString()}</span>
-                </div>
-                <button onClick={() => { setSelectedScheme(scheme); setIsModalOpen(true); }}
-                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-semibold">
-                  {t.viewDetails}
-                </button>
-              </div>
+              <PredictionCard
+                key={idx}
+                scheme={scheme}
+                t={t}
+                onSelect={() => {
+                  setSelectedScheme(scheme);
+                  setIsModalOpen(true);
+                }}
+              />
             ))}
           </div>
         </div>
 
-        {/* Right Column: Explanation Panel */}
-        <div className="bg-white p-6 rounded-lg shadow-md border">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">{t.whyPrediction}</h2>
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.userProfile}</h3>
-            <ul className="text-sm text-gray-700 space-y-1">
-              <li>Age: {formData.age}</li>
-              <li>Income: ₹{formData.income}</li>
-              <li>Gender: {formData.gender}</li>
-              <li>State: {formData.state}</li>
-              <li>Occupation: {formData.occupation}</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.aiReasoning}</h3>
-            <ul className="text-sm text-gray-700 space-y-1">
-              {results.flatMap((s) => s.explanation).map((reason, idx) => (
-                <li key={idx}>• {reason}</li>
-              ))}
-            </ul>
-          </div>
+        {/* Right Column: Explanation + Fairness */}
+        <div className="flex flex-col">
+          <ExplanationPanel t={t} formData={formData} results={results} />
+          <FairnessPanel
+            fairness={fairness}
+            ethicalDisclaimer={ethicalDisclaimer}
+          />
         </div>
       </div>
     </div>

@@ -1,0 +1,23 @@
+{
+  "scheme_id": "nsp",
+  "scheme_name": "National Scholarship Portal (NSP) - Simplified Demo",
+  "description": "Demo-only simulator for scholarship eligibility on the National Scholarship Portal, combining rule-based checks with a simple ML probability estimate.",
+  "benefit_amount": {
+    "currency": "INR",
+    "value": 50000,
+    "frequency": "annual_or_term_based",
+    "notes": "Illustrative scholarship amount used only for this hackathon project."
+  },
+  "sensitive_features_monitored": [
+    "gender",
+    "disability_status"
+  ],
+  "fairness_policy": {
+    "metric": "approval_rate_difference",
+    "allowed_bias_threshold": 0.1,
+    "interpretation": "Differences in approval rates between monitored groups beyond 10 percentage points should trigger a fairness WARN or FAIL."
+  },
+  "ethical_disclaimer": "This NSP module is a hackathon demonstration. It is not affiliated with the official National Scholarship Portal and must not be used to make real scholarship decisions. All rules are simplified for educational purposes.",
+  "last_updated": "2026-01-28"
+}
+

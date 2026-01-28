@@ -1,138 +1,69 @@
-# AI Scheme Eligibility & Impact Predictor
-
-> **Empowering citizens to discover government schemes they are eligible for using Explainable AI**
-
----
-
-## 🧠 Problem Statement
-
-In India, thousands of government welfare schemes exist at both central and state levels. However:
-
-* Citizens struggle to **discover relevant schemes**
-* Eligibility rules are **complex and difficult to interpret**
-* Applicants often lack clarity about **approval likelihood**, leading to confusion and repeated attempts
-
-As a result, many eligible citizens are unable to access benefits that could significantly improve their quality of life.
+# 🌟 Yojana Darpan
+### AI-Powered Scheme Eligibility & Impact Predictor
 
 ---
 
-## 💡 Our Solution
-
-**AI Scheme Eligibility & Impact Predictor** is a web-based, AI-powered system that:
-
-* Identifies **government schemes a citizen is eligible for**
-* Predicts the **probability of approval** for each scheme
-* Estimates the **expected benefit amount**
-* Clearly explains **why each recommendation was made** using Explainable AI
-
-The focus is on **clarity, transparency, and responsible AI**, not black-box predictions.
+## 📌 Introduction
+**Yojana Darpan** is an AI-powered platform designed to help citizens determine their eligibility for major government schemes in India. By combining rule-based checks with AI-driven probability estimation, the system provides users with clear, trustworthy guidance on the benefits they may receive. The platform emphasizes fairness, transparency, and explainability to ensure responsible use of AI.
 
 ---
 
-## ⚙️ How It Works (High-Level Flow)
-
-1. **User Input**
-   The user enters basic details such as age, gender, state, occupation, and annual income.
-
-2. **Eligibility Analysis**
-   The system matches user details against scheme eligibility rules and ML models.
-
-3. **Prediction**
-   AI models estimate approval probability and expected benefit amount.
-
-4. **Explainable AI Output**
-   The system shows simple, human-readable reasons behind each recommendation.
-
-5. **Results Display**
-   Eligible schemes are shown, ranked by approval probability.
+## ⚠️ The Challenge
+Many government schemes in India have complex eligibility criteria, which makes it difficult for citizens to know which programs they qualify for. This often results in missed opportunities for financial, educational, or health support. Citizens need a reliable, simple, and unbiased tool to understand their eligibility for various schemes.
 
 ---
 
-## 🧪 Example Output
+## 🛠 Our Approach
+**Yojana Darpan** solves this problem by combining:
 
-For each eligible scheme, the system displays:
+- **✅ Rule-based eligibility checks:** Ensures compliance with official scheme requirements  
+- **📊 Probability estimation with ML models:** Estimates the likelihood of approval using Logistic Regression or Random Forest  
+- **📝 Explainable reasoning:** Provides human-readable explanations for each eligibility decision  
+- **⚖️ Fairness audit:** Monitors sensitive attributes (like gender) to prevent biased predictions  
+- **💡 Ethical guidance:** Ensures predictions are advisory and guide users responsibly  
 
-* ✅ Eligibility status
-* 📊 Approval probability (percentage + progress bar)
-* 💰 Expected benefit amount
-* 🧠 Explanation (e.g., income threshold, age group, state eligibility)
-
-This helps users **prioritize applications intelligently**.
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-* React.js
-* Tailwind CSS
-
-### Backend
-
-* Python
-* FastAPI
-
-### Machine Learning
-
-* Logistic Regression
-* Random Forest
-
-### Explainability
-
-* Rule-based explanations
-* SHAP-inspired reasoning (simplified for clarity)
-
-### Deployment
-
-* Frontend: Vercel
-* Backend: Render
+This approach allows users to confidently identify schemes they are eligible for while maintaining fairness and transparency.
 
 ---
 
-## 🎯 Key Highlights
-
-* **Explainable AI First** – users understand *why* a scheme is recommended
-* **Probability-Based Insights** – helps users prioritize applications
-* **Citizen-Centric Design** – simple, government-portal-style interface
-* **Focused MVP** – emphasizes clarity, reliability, and usability
-* **AI for Social Good** – addresses real-world public policy challenges
-
----
-
-## 🚧 Scope & Limitations
-
-* The system currently uses **representative scheme data** for demonstration
-* Predictions are **indicative** and do not represent official government decisions
-* The platform is designed to **assist discovery and understanding**, not replace official portals
+## 🔄 System Workflow
+1. **🧑‍💼 User Input:** Citizens provide personal and demographic details such as age, income, state, gender, occupation, and optional information like land holdings for farmers.  
+2. **📋 Eligibility Assessment:** Rule-based engine checks eligibility for each supported scheme.  
+3. **📈 Probability Prediction:** ML models provide the probability of scheme approval.  
+4. **🧐 Explainability Report:** The system explains why a user is eligible or ineligible.  
+5. **⚖️ Fairness Check:** Predictions are audited for potential bias across sensitive attributes.  
+6. **🎯 Output Generation:** Users receive eligibility status, approval probability, expected benefit, explanation, and fairness report.
 
 ---
 
-## 🔒 Responsible AI & Privacy
+## 🎯 Expected Results
+For each scheme, users will see:
 
-* No sensitive personal data is stored
-* User inputs are used **only for eligibility calculation**
-* No third-party data sharing
-* Focus on transparency and trust
-
----
-
-## 🚀 Future Scope
-
-* Expansion to a larger number of central and state schemes
-* Multilingual and voice-based access
-* Mobile-first experience for improved accessibility
-* Document upload and automated verification
-* Enhanced accessibility features
+- **✅ Eligibility Status:** Eligible or Not Eligible  
+- **📊 Approval Probability:** Likelihood of successful approval  
+- **💰 Expected Benefit:** Estimated benefit amount or value  
+- **📝 Explanation:** Rule-based reasoning and AI probability interpretation  
+- **⚖️ Fairness Report:** Bias monitoring results for sensitive attributes  
+- **📌 Ethical Disclaimer:** Advisory guidance for informed decision-making
 
 ---
 
-## 🏁 Conclusion
-
-**AI Scheme Eligibility & Impact Predictor** demonstrates how artificial intelligence can be applied responsibly to help citizens better understand and access government welfare programs.
-
-By focusing on transparency, explainability, and user-centric design, the system aims to bridge the gap between complex policy frameworks and the people they are meant to serve.
+## 💻 Technology Stack
+- **Backend:** Python + FastAPI  
+- **Frontend:** React + Tailwind CSS  
+- **ML Models:** Logistic Regression / Random Forest (for probability estimation only)  
+- **Explainability & Fairness:** Rule-based reasoning and post-hoc bias monitoring  
 
 ---
 
-> *"No eligible citizen should miss out on government benefits due to lack of awareness or clarity."*
+## ✨ Key Features & Innovations
+- **🔍 Transparent Rule-Based Eligibility:** Ensures correctness and auditability  
+- **⚖️ Fairness Monitoring:** Detects bias to maintain ethical standards  
+- **📝 Explainable AI:** Clear reasoning behind each prediction  
+- **📊 Probability-Based Insights:** ML provides an additional layer of informed decision-making  
+- **🖥 User-Friendly Interface:** Simple forms and clear results for citizens  
+
+---
+
+## 🏆 Summary & Impact
+**Yojana Darpan** provides citizens with a reliable, fair, and transparent way to understand their eligibility for government schemes. By combining AI, rules, and ethical monitoring, it empowers users to make informed decisions and ensures that support reaches the right people efficiently. This project bridges the gap between complex government policies and citizens seeking their benefits.

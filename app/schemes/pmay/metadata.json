@@ -1,0 +1,22 @@
+{
+  "scheme_id": "pmay",
+  "scheme_name": "Pradhan Mantri Awas Yojana (PMAY)",
+  "description": "Demo-only simulator for PMAY housing support, combining transparent rule checks with a simple ML-based approval probability.",
+  "benefit_amount": {
+    "currency": "INR",
+    "value": 250000,
+    "frequency": "one_time_or_project_based",
+    "notes": "Approximate maximum benefit for housing assistance used only for illustration in this hackathon demo."
+  },
+  "sensitive_features_monitored": [
+    "gender"
+  ],
+  "fairness_policy": {
+    "metric": "approval_rate_difference",
+    "allowed_bias_threshold": 0.1,
+    "interpretation": "In this demo, the difference in approval rates between monitored groups (e.g., male vs female) should not exceed 10 percentage points when averaged over a batch of applications."
+  },
+  "ethical_disclaimer": "This PMAY module is a hackathon demonstration only. It is NOT an official allocation system and must never be used for real-world eligibility or subsidy decisions. Policy rules are intentionally simplified for educational purposes.",
+  "last_updated": "2026-01-28"
+}
+

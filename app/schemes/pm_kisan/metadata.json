@@ -1,0 +1,23 @@
+{
+  "scheme_id": "pm_kisan",
+  "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+  "description": "Demo-only simulator for PM-KISAN eligibility and impact, combining clear rule checks with a simple ML probability estimate.",
+  "benefit_amount": {
+    "currency": "INR",
+    "value": 6000,
+    "frequency": "annual",
+    "notes": "Approximate annual income support used for illustration in this hackathon demo."
+  },
+  "sensitive_features_monitored": [
+    "gender",
+    "disability_status"
+  ],
+  "fairness_policy": {
+    "metric": "approval_rate_difference",
+    "allowed_bias_threshold": 0.1,
+    "interpretation": "For this demo, the difference in approval rates between any two monitored groups (e.g., male vs female) should not exceed 10 percentage points. Larger gaps should trigger a WARN or FAIL status in the bias report."
+  },
+  "ethical_disclaimer": "This PM-KISAN module is a hackathon demonstration only. It is NOT an official government system and must not be used to make real-world eligibility or payment decisions. The rules and parameters are simplified for educational purposes and may not reflect actual policy.",
+  "last_updated": "2026-01-28"
+}
+

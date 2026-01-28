@@ -1,0 +1,23 @@
+{
+  "scheme_id": "ayushman",
+  "scheme_name": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+  "description": "Demo-only simulator for Ayushman health coverage, where rule-based eligibility comes first and a simple ML model provides an estimated approval probability.",
+  "benefit_amount": {
+    "currency": "INR",
+    "value": 500000,
+    "frequency": "annual_cover_limit",
+    "notes": "Illustrative maximum annual health cover limit for this hackathon demo."
+  },
+  "sensitive_features_monitored": [
+    "gender",
+    "disability_status"
+  ],
+  "fairness_policy": {
+    "metric": "approval_rate_difference",
+    "allowed_bias_threshold": 0.1,
+    "interpretation": "For this demo, gaps greater than 10 percentage points in approval rates between monitored groups should be highlighted as potential unfairness."
+  },
+  "ethical_disclaimer": "This Ayushman module is a hackathon demonstration, not a production decision system. It should never be used for real medical coverage or claim decisions. Eligibility rules are intentionally simplified.",
+  "last_updated": "2026-01-28"
+}
+
